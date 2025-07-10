@@ -1,0 +1,211 @@
+.mini {
+  padding: 0.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: all 0.6s ease;
+  cursor: pointer;
+  color: white;
+}
+
+.mini:hover {
+  background-color: white;
+  border-color: #fff;
+  color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 400px;
+  overflow-x: hidden;
+}
+
+#root,
+.center-container,
+.center-box {
+  min-width: 400px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.navbar {
+  background-color: #333;
+  color: white;
+  height: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  min-width: 400px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.navbar li {
+  flex-shrink: 0;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.center-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 1rem;
+}
+
+.center-box {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  width: 95%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.chofer-box {
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.content-section {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.vueltas-box {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra todo el contenido horizontalmente */
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.vuelta-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  justify-content: center; /* centra la fila */
+  width: 100%; /* que ocupe todo el ancho del contenedor */
+  max-width: 350px; /* para limitar ancho y que no estire mucho */
+}
+
+.vuelta-num {
+  min-width: 80px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.input-efectivo {
+  flex-grow: 1;
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: right;
+  max-width: 150px;
+  box-sizing: border-box;
+}
+
+.add-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-vuelta-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.add-vuelta-button:hover {
+  background-color: #0056b3;
+}
+
+.gastos-section {
+  flex: 1;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 250px;
+  box-sizing: border-box;
+}
+
+.total {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.gasto-placeholder {
+  background: #f9f9f9;
+  border: 1px dashed #aaa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.observaciones {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.observaciones textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  resize: vertical;
+}
