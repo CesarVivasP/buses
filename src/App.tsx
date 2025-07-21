@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
-import VueltaSection from "./components/Vueltas"; // importa con el nombre exacto
+import VueltaSection from "./components/Vueltas";
+import Gastos from "./components/Gastos"; // Asegúrate de tenerlo en la carpeta correcta
 import "./App.css";
 
 function App() {
@@ -33,12 +34,15 @@ function App() {
     <>
       <Header />
       <main className="main-content-wrapper">
-        <VueltaSection
-          vueltas={vueltas}
-          efectivo={efectivo}
-          onChange={handleChange}
-          onAdd={addVuelta}
-        />
+        <div className="contenido-flex">
+          <VueltaSection
+            vueltas={vueltas}
+            efectivo={efectivo}
+            onChange={handleChange}
+            onAdd={addVuelta}
+          />
+          <Gastos />
+        </div>
       </main>
     </>
   );

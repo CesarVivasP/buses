@@ -226,6 +226,7 @@ body {
   border: none;
   padding: 10px 20px;
   font-size: 16px;
+  margin-top: 1rem;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -239,25 +240,131 @@ body {
 .gastos-section {
   flex: 1;
   background-color: white;
-  padding: 1.5rem 2rem; /* más padding */
+  padding: 1.5rem 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-  min-width: 280px;
   box-sizing: border-box;
   margin-bottom: 1.5rem;
+  min-width: 280px;
+}
+
+.gastos-listado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.gasto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.gasto-nombre {
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+/* Contenedor de la tabla de gastos */
+.gastos-tabla {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+/* Columna izquierda - Nombres de gastos */
+.columna-nombres {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Columna derecha - Inputs */
+.columna-valores {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Estilo para nombres de gasto */
+.cabecera {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Inputs de valores */
+.input-valor,
+.input-otro-nombre {
+  flex: 0.5;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.2s ease;
+}
+
+.input-valor::-webkit-outer-spin-button,
+.input-valor::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-valor:focus,
+.input-otro-nombre:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botón para agregar otros gastos */
+.btn-agregar-otro {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  align-self: flex-start;
+  transition: background-color 0.2s ease;
+}
+
+.btn-agregar-otro:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para mostrar el total de gastos */
+.total-gastos {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  text-align: right;
+  font-weight: bold;
+  color: #222;
 }
 
 .total {
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   font-weight: bold;
+  font-size: 1.2rem;
 }
 
+/* Para campos adicionales sin datos */
 .gasto-placeholder {
-  background: #f9f9f9;
+  background: #f5f5f5;
   border: 1px dashed #aaa;
   padding: 1rem;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-style: italic;
+  color: #777;
 }
 
 .observaciones textarea {
@@ -300,19 +407,35 @@ body {
   border-radius: 16px;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.4), 0 20px 30px rgba(0, 0, 0, 0.25),
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4), 0 20px 30px rgba(0, 0, 0, 0.25),
     0 0 15px rgba(92, 63, 255, 0.6);
   transform: translateZ(0);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-
   width: 95%;
   max-width: 1000px;
   padding: 1.5rem 2rem;
+  margin-bottom: 4rem;
   box-sizing: border-box;
   height: auto;
   min-height: 100px;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+.contenido-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  justify-content: space-between;
 }
 
+.contenido-flex > * {
+  flex: 1 1 48%; /* Cada hijo ocupa aproximadamente el 48% (con 2% para el gap) */
+  min-width: 300px; /* Opcional: evita que se achiquen demasiado */
+}
 /* Para dispositivos pequeños */
 @media (max-width: 600px) {
   .main-content-wrapper {
