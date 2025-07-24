@@ -1,33 +1,39 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import VueltaSection from "./components/Vueltas";
-import Gastos from "./components/Gastos"; // Asegúrate de tenerlo en la carpeta correcta
+import Gastos from "./components/Gastos";
+import Observ from "./components/Observ";
 import "./App.css";
 
 function App() {
+  const [observaciones, setObservaciones] = useState("");
+
   const [vueltas, setVueltas] = useState<number[]>([]);
-  const [efectivo, setEfectivo] = useState<number[]>([]);
+  // Cambié de number[] a string[] para manejar mejor inputs parciales
+  const [efectivo, setEfectivo] = useState<string[]>([]);
 
   const handleChange = (
     value: string,
     index: number,
     type: "vueltas" | "efectivo"
   ) => {
-    const parsed = parseFloat(value) || 0;
     if (type === "vueltas") {
+      const parsed = parseFloat(value) || 0;
       const updated = [...vueltas];
       updated[index] = parsed;
       setVueltas(updated);
     } else {
+      // Guardamos el valor tal cual (string), sin parsear
       const updated = [...efectivo];
-      updated[index] = parsed;
+      updated[index] = value;
       setEfectivo(updated);
     }
   };
 
   const addVuelta = () => {
     setVueltas([...vueltas, vueltas.length + 1]);
-    setEfectivo([...efectivo, 0]);
+    // Agregamos string vacío en lugar de 0 numérico
+    setEfectivo([...efectivo, ""]);
   };
 
   return (
@@ -47,5 +53,4 @@ function App() {
     </>
   );
 }
-
 export default App;
