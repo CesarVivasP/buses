@@ -6,11 +6,10 @@ import Observ from "./components/Observ";
 import "./App.css";
 
 function App() {
-  const [observaciones, setObservaciones] = useState("");
-
   const [vueltas, setVueltas] = useState<number[]>([]);
   // Cambié de number[] a string[] para manejar mejor inputs parciales
   const [efectivo, setEfectivo] = useState<string[]>([]);
+  const [observaciones, setObservaciones] = useState<string>("");
 
   const handleChange = (
     value: string,
@@ -49,6 +48,7 @@ function App() {
           />
           <Gastos />
         </div>
+        <Observ value={observaciones} onChange={setObservaciones} />
       </main>
     </>
   );

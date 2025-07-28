@@ -386,14 +386,14 @@ body {
 
 .observ-textarea {
   width: 100%;
-  border-radius: 12px;
-  border: 1.5px solid #aaa;
-  padding: 1rem;
+  min-height: 100px;
   resize: vertical;
-  min-height: 120px;
+  padding: 0.75rem;
   font-size: 1rem;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
   font-family: inherit;
-  transition: border-color 0.3s ease;
 }
 
 .observ-textarea:focus {
@@ -402,14 +402,25 @@ body {
   box-shadow: 0 0 8px rgba(0, 86, 179, 0.3);
 }
 .observ-container {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
+  margin: 2rem auto 0 auto;
+  flex-basis: 100%; /* ocupa toda la fila */
+  margin-top: 0rem;
+  max-width: 1200px;
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(69, 24, 194, 0.5);
 }
 
 .observ-label {
-  font-weight: 600;
+  display: block;
+  font-weight: bold;
   margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #333;
 }
 /* src/components/Card.css */
 
@@ -432,6 +443,7 @@ body {
   margin: -4rem auto 0 auto; /* arriba -4rem, laterales auto para centrar, abajo 0 */
   border-radius: 16px;
   background-color: white;
+  flex-direction: column;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.4), 0 20px 30px rgba(0, 0, 0, 0.25),
     0 0 15px rgba(92, 63, 255, 0.6);
