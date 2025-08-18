@@ -1,48 +1,47 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import "../App.css";
+
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
-    <>
-      <header className="navbar">
-        <nav>
+    <header className="navbar">
+      <div className="navbar-container">
+        <div className="logo">Mi App</div>
+
+        {/* Botón hamburguesa */}
+        <button className="menu-toggle" onClick={toggleMenu}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </button>
+
+        <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
           <ul>
             <li>
-              <a className="mini" href="#">
-                Ingreso de Buses
-              </a>
+              <Link to="/" onClick={() => setMenuOpen(false)}>
+                Ingreso de Datos
+              </Link>
             </li>
             <li>
-              <a className="mini" href="#">
-                Reportes Diarios
-              </a>
+              <Link to="/registro-diario" onClick={() => setMenuOpen(false)}>
+                Reporte Diario
+              </Link>
             </li>
             <li>
-              <a className="mini" href="#">
+              <Link to="/contacto" onClick={() => setMenuOpen(false)}>
                 Contacto
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
-      </header>
-
-      {/* Contenedor centrado debajo del navbar */}
-      <div className="form-alineado">
-        <label className="form-label">Número del Bus:</label>
-        <select className="form-select">
-          <option value="">Seleccione Su Bus</option>
-          <option value="opcion1">Vuelta Larga 01</option>
-          <option value="opcion2">Vuelta Larga 02</option>
-          <option value="opcion3">Vuelta Larga 03</option>
-          <option value="opcion4">Vuelta Larga 04</option>
-        </select>
-
-        <label className="form-label">Nombre del chofer:</label>
-        <select className="form-select">
-          <option value="">Seleccione Su nombre</option>
-          <option value="opcion1">Pepe José Mero Garcia</option>
-          <option value="opcion2">Keny Elan Nieto Plua</option>
-          <option value="opcion3">Ivan Andrés Silva Briones</option>
-        </select>
       </div>
-    </>
+    </header>
   );
 };
 

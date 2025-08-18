@@ -1,56 +1,19 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import VueltaSection from "./components/Vueltas";
-import Gastos from "./components/Gastos";
-import Observ from "./components/Observ";
-import "./App.css";
+import IngresoDatos from "./pages/IngresoDatos";
+import RegistroDiario from "./pages/RegistroDiario";
 
 function App() {
-  const [vueltas, setVueltas] = useState<number[]>([]);
-  // Cambié de number[] a string[] para manejar mejor inputs parciales
-  const [efectivo, setEfectivo] = useState<string[]>([]);
-  const [observaciones, setObservaciones] = useState<string>("");
-
-  const handleChange = (
-    value: string,
-    index: number,
-    type: "vueltas" | "efectivo"
-  ) => {
-    if (type === "vueltas") {
-      const parsed = parseFloat(value) || 0;
-      const updated = [...vueltas];
-      updated[index] = parsed;
-      setVueltas(updated);
-    } else {
-      // Guardamos el valor tal cual (string), sin parsear
-      const updated = [...efectivo];
-      updated[index] = value;
-      setEfectivo(updated);
-    }
-  };
-
-  const addVuelta = () => {
-    setVueltas([...vueltas, vueltas.length + 1]);
-    // Agregamos string vacío en lugar de 0 numérico
-    setEfectivo([...efectivo, ""]);
-  };
-
   return (
     <>
       <Header />
-      <main className="main-content-wrapper">
-        <div className="contenido-flex">
-          <VueltaSection
-            vueltas={vueltas}
-            efectivo={efectivo}
-            onChange={handleChange}
-            onAdd={addVuelta}
-          />
-          <Gastos />
-        </div>
-        <Observ value={observaciones} onChange={setObservaciones} />
-      </main>
+
+      <Routes>
+        <Route path="/" element={<IngresoDatos />} />
+        <Route path="/registro-diario" element={<RegistroDiario />} />
+      </Routes>
     </>
   );
 }
+
 export default App;
