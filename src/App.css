@@ -104,8 +104,6 @@ body {
   height: 3px;
   width: 100%;
   background-color: #fff; /* blanco visible sobre negro */
-  transition: color 0.5s, background-color 0.5s;
-
   border-radius: 2px;
   transition: background-color 0.3s;
 }
@@ -622,4 +620,57 @@ body {
   text-align: center;
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+.form-alingreso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 5rem auto 2rem auto;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  background: #fff;
+  border-radius: 25px;
+
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.15),
+    0 18px 30px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: visible;
+}
+
+.form-section {
+  width: 95%; /* asegura que los inputs no se salgan */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.form-subtitle {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 45px;
 }

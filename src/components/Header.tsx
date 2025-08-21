@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
+import Logo from "../imagenes/vueltalar.png";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,8 +13,9 @@ const Header = () => {
   return (
     <header className="navbar">
       <div className="navbar-container">
-        <div className="logo">Mi App</div>
-
+        <div>
+          <img src={Logo} alt="Logo" className="logo" />
+        </div>
         {/* Botón hamburguesa */}
         <button className="menu-toggle" onClick={toggleMenu}>
           <span className="bar"></span>
