@@ -1,0 +1,6 @@
+{
+  "watch": ["backend"],
+  "ext": "ts,js,json",
+  "ignore": ["node_modules"],
+  "exec": "ts-node --esm backend/indexx.js"
+}

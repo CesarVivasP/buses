@@ -604,6 +604,13 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2); /* Efecto al enfocar */
 }
 
+.form-select-list {
+  max-height: 150px; /* altura máxima */
+  overflow-y: auto; /* activa scroll vertical */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
 @media (max-width: 900px) {
   .content-section {
     flex-wrap: wrap;
@@ -673,4 +680,30 @@ body {
   justify-content: center;
   width: 50px;
   height: 45px;
+}
+/* Contenedor de selects en columna */
+.select-container {
+  display: flex;
+  flex-direction: column; /* Para que los selects estén uno debajo del otro */
+  gap: 10px; /* Espacio entre los selects */
+  margin-bottom: 1px;
+}
+
+/* Estilos para react-select */
+.select-container .react-select__control {
+  width: 10vw;
+  min-width: 300px;
+  max-width: 600px;
+  min-height: 45px;
+}
+
+/* Ajuste del menú desplegable */
+.select-container .react-select__menu {
+  width: 30vw;
+  max-width: 300px;
+}
+.react-select__control {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
 }

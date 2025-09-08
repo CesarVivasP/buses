@@ -14,7 +14,7 @@ const Observ = ({ value, onChange }: ObservProps) => {
         className="observ-textarea"
         placeholder="Escribe tus observaciones aquí..."
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value.trimStart())}
         rows={4}
       />
     </div>

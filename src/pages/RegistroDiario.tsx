@@ -1,70 +1,178 @@
-import { useState } from "react";
+// src/pages/RegistroDiario.tsx
+import { useState, useEffect } from "react";
+import Select from "react-select";
 import Header from "../components/Header";
 import VueltaSection from "../components/Vueltas";
-import Gastos from "../components/Gastos";
+import Gastos, { Gasto } from "../components/Gastos";
 import Observ from "../components/Observ";
 import "../App.css";
 
 function RegistroDiario() {
+  const [buses, setBuses] = useState<
+    { id_bus: number; placa: string; n_bus: number }[]
+  >([]);
+  const [usuarios, setUsuarios] = useState<
+    { id_usuario: number; cedula: string; nombres: string; apellidos: string }[]
+  >([]);
+  const [setTiposGasto] = useState<{ id_tipo_gasto: number; nombre: string }[]>(
+    []
+  );
+
+  const [selectedBus, setSelectedBus] = useState<{
+    value: number;
+    label: string;
+  } | null>(null);
+  const [selectedChofer, setSelectedChofer] = useState<{
+    value: number;
+    label: string;
+  } | null>(null);
+
   const [vueltas, setVueltas] = useState<number[]>([]);
   const [efectivo, setEfectivo] = useState<string[]>([]);
   const [observaciones, setObservaciones] = useState<string>("");
 
-  const handleChange = (
-    value: string,
-    index: number,
-    type: "vueltas" | "efectivo"
-  ) => {
-    if (type === "vueltas") {
-      const parsed = parseFloat(value) || 0;
-      const updated = [...vueltas];
-      updated[index] = parsed;
-      setVueltas(updated);
-    } else {
-      const updated = [...efectivo];
-      updated[index] = value;
-      setEfectivo(updated);
-    }
-  };
+  const [gastos, setGastos] = useState<Gasto[]>([]);
 
-  const addVuelta = () => {
-    setVueltas([...vueltas, vueltas.length + 1]);
-    setEfectivo([...efectivo, ""]);
+  // ======================
+  // 📌 Cargar datos iniciales
+  // ======================
+  useEffect(() => {
+    fetch("http://localhost:3001/buses")
+      .then((res) => res.json())
+      .then((data) => setBuses(data))
+      .catch(console.error);
+
+    fetch("http://localhost:3001/usuarios")
+      .then((res) => res.json())
+      .then((data) => setUsuarios(data))
+      .catch(console.error);
+
+    fetch("http://localhost:3001/tipos_gasto")
+      .then((res) => res.json())
+      .then((data) => {
+        setTiposGasto(data);
+        // inicializar gastos con id y nombre
+        setGastos(
+          data.map((tg: any) => ({
+            id_tipo_gasto: tg.id_tipo_gasto,
+            nombre: tg.nombre,
+            valor: "",
+          }))
+        );
+      })
+      .catch(console.error);
+  }, []);
+
+  // Opciones para react-select
+  const busOptions = buses.map((b) => ({
+    value: b.id_bus,
+    label: `${b.placa} - Bus ${b.n_bus}`,
+  }));
+
+  const choferOptions = usuarios.map((u) => ({
+    value: u.id_usuario,
+    label: `${u.nombres} ${u.apellidos} - ${u.cedula}`,
+  }));
+
+  // ======================
+  // 📌 Guardar en la base
+  // ======================
+  const handleGuardar = () => {
+    if (!selectedBus || !selectedChofer) {
+      alert("⚠️ Selecciona un bus y un chofer antes de guardar.");
+      return;
+    }
+
+    const registro = {
+      id_bus: Number(selectedBus.value),
+      id_usuario: Number(selectedChofer.value),
+      observaciones,
+      vueltas: vueltas.map((v, i) => ({
+        numero_vuelta: i + 1,
+        valor: parseFloat(efectivo[i]) || 0,
+      })),
+      gastos: gastos.map((g) => ({
+        id_tipo_gasto: g.id_tipo_gasto,
+        monto: parseFloat(g.valor) || 0,
+      })),
+    };
+
+    console.log("📤 Enviando al backend:", registro);
+
+    fetch("http://localhost:3001/reportes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(registro),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("✅ Guardado con éxito:", data);
+        alert("Registro guardado correctamente ✅");
+      })
+      .catch((err) => console.error("❌ Error al guardar:", err));
   };
 
   return (
     <>
       <Header />
       <main className="main-content-wrapper">
-        {/* Contenedor centrado debajo del navbar */}
-        <div className="form-alineado">
-          <label className="form-label">Número del Bus:</label>
-          <select className="form-select">
-            <option value="">Seleccione Su Bus</option>
-            <option value="opcion1">Vuelta Larga 01</option>
-            <option value="opcion2">Vuelta Larga 02</option>
-            <option value="opcion3">Vuelta Larga 03</option>
-            <option value="opcion4">Vuelta Larga 04</option>
-          </select>
+        <div className="select-container">
+          <div>
+            <label className="form-label">Número del Bus:</label>
+            <Select
+              options={busOptions}
+              value={selectedBus}
+              onChange={(option) => setSelectedBus(option)}
+              placeholder="Seleccione su bus..."
+              isSearchable
+              classNamePrefix="react-select"
+            />
+          </div>
 
-          <label className="form-label">Nombre del chofer:</label>
-          <select className="form-select">
-            <option value="">Seleccione Su nombre</option>
-            <option value="opcion1">Pepe José Mero Garcia</option>
-            <option value="opcion2">Keny Elan Nieto Plua</option>
-            <option value="opcion3">Ivan Andrés Silva Briones</option>
-          </select>
+          <div>
+            <label className="form-label">Nombre del chofer:</label>
+            <Select
+              options={choferOptions}
+              value={selectedChofer}
+              onChange={(option) => setSelectedChofer(option)}
+              placeholder="Seleccione chofer..."
+              isSearchable
+              classNamePrefix="react-select"
+            />
+          </div>
         </div>
+
         <div className="contenido-flex">
           <VueltaSection
             vueltas={vueltas}
             efectivo={efectivo}
-            onChange={handleChange}
-            onAdd={addVuelta}
+            onChange={(value, index, type) => {
+              if (type === "vueltas") {
+                const updated = [...vueltas];
+                updated[index] = parseFloat(value) || 0;
+                setVueltas(updated);
+              } else {
+                const updated = [...efectivo];
+                updated[index] = value;
+                setEfectivo(updated);
+              }
+            }}
+            onAdd={() => {
+              setVueltas([...vueltas, vueltas.length + 1]);
+              setEfectivo([...efectivo, ""]);
+            }}
           />
-          <Gastos />
+          <Gastos gastos={gastos} setGastos={setGastos} />
         </div>
+
         <Observ value={observaciones} onChange={setObservaciones} />
+
+        {/* Botón de guardar */}
+        <div style={{ marginTop: "20px", textAlign: "center" }}>
+          <button onClick={handleGuardar} className="btn-guardar">
+            Guardar Registro
+          </button>
+        </div>
       </main>
     </>
   );
