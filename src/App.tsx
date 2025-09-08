@@ -1,13 +1,16 @@
 // src/App.tsx
 import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom"; // solo Routes y Route
 import Select from "react-select";
 import Header from "./components/Header";
 import VueltaSection from "./components/Vueltas";
 import Gastos, { Gasto } from "./components/Gastos";
 import Observ from "./components/Observ";
+import IngresoDatos from "./pages/IngresoDatos";
+import RegistroDiario from "./pages/RegistroDiario";
 import "./App.css";
 
-function App() {
+function IngresoDatoss() {
   const [buses, setBuses] = useState<
     { id_bus: number; placa: string; n_bus: number }[]
   >([]);
@@ -17,7 +20,6 @@ function App() {
   const [tiposGasto, setTiposGasto] = useState<
     { id_tipo_gasto: number; nombre: string }[]
   >([]);
-
   const [selectedBus, setSelectedBus] = useState<{
     value: number;
     label: string;
@@ -26,17 +28,11 @@ function App() {
     value: number;
     label: string;
   } | null>(null);
-
   const [vueltas, setVueltas] = useState<number[]>([]);
   const [efectivo, setEfectivo] = useState<string[]>([]);
   const [observaciones, setObservaciones] = useState<string>("");
-
-  // 📌 Gastos vinculados a la tabla tipos_gasto
   const [gastos, setGastos] = useState<Gasto[]>([]);
 
-  // ======================
-  // 📌 Cargar datos iniciales
-  // ======================
   useEffect(() => {
     fetch("http://localhost:3001/buses")
       .then((res) => res.json())
@@ -52,7 +48,6 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setTiposGasto(data);
-        // Inicializar gastos con id_tipo_gasto y valor vacío
         setGastos(
           data.map((tg: any) => ({
             id_tipo_gasto: tg.id_tipo_gasto,
@@ -64,20 +59,15 @@ function App() {
       .catch(console.error);
   }, []);
 
-  // Opciones para react-select
   const busOptions = buses.map((b) => ({
     value: b.id_bus,
     label: `${b.placa} - Bus ${b.n_bus}`,
   }));
-
   const choferOptions = usuarios.map((u) => ({
     value: u.id_usuario,
     label: `${u.nombres} ${u.apellidos} - ${u.cedula}`,
   }));
 
-  // ======================
-  // 📌 Manejo cambios vueltas y efectivo
-  // ======================
   const handleChange = (
     value: string,
     index: number,
@@ -96,20 +86,16 @@ function App() {
   };
 
   const addVuelta = () => {
-    setVueltas([...vueltas, 0]); // siempre inicia en 0
+    setVueltas([...vueltas, 0]);
     setEfectivo([...efectivo, ""]);
   };
 
-  // ======================
-  // 📌 Guardar registro diario
-  // ======================
   const handleSubmit = async () => {
     if (!selectedBus || !selectedChofer) {
       alert("⚠️ Selecciona un bus y un chofer antes de guardar.");
       return;
     }
 
-    // ✅ Usar directamente el id_tipo_gasto
     const gastosFinales = gastos.map((g) => ({
       id_tipo_gasto: g.id_tipo_gasto,
       monto: parseFloat(g.valor) || 0,
@@ -126,17 +112,13 @@ function App() {
       gastos: gastosFinales,
     };
 
-    console.log("📤 Enviando al backend:", registro);
-
     try {
       const res = await fetch("http://localhost:3001/reportes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registro),
       });
-
       const data = await res.json();
-      console.log("✅ Guardado con éxito:", data);
       alert("Registro diario guardado con éxito ✅");
 
       // Reset opcional
@@ -153,7 +135,7 @@ function App() {
         }))
       );
     } catch (error) {
-      console.error("❌ Error al guardar:", error);
+      console.error(error);
       alert("Error al guardar el registro diario ❌");
     }
   };
@@ -162,7 +144,6 @@ function App() {
     <>
       <Header />
       <main className="main-content-wrapper">
-        {/* Selección bus y chofer */}
         <div className="select-container">
           <div>
             <label className="form-label">Número del Bus:</label>
@@ -175,7 +156,6 @@ function App() {
               classNamePrefix="react-select"
             />
           </div>
-
           <div>
             <label className="form-label">Nombre del chofer:</label>
             <Select
@@ -189,7 +169,6 @@ function App() {
           </div>
         </div>
 
-        {/* Sección de vueltas y gastos */}
         <div className="contenido-flex">
           <VueltaSection
             vueltas={vueltas}
@@ -200,10 +179,8 @@ function App() {
           <Gastos gastos={gastos} setGastos={setGastos} />
         </div>
 
-        {/* Observaciones */}
         <Observ value={observaciones} onChange={setObservaciones} />
 
-        {/* Botón guardar */}
         <div style={{ marginTop: "20px", textAlign: "center" }}>
           <button className="btn-guardar" onClick={handleSubmit}>
             Guardar Registro Diario
@@ -211,6 +188,16 @@ function App() {
         </div>
       </main>
     </>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/registro-diario" element={<IngresoDatoss />} />
+      <Route path="/" element={<IngresoDatos />} />
+      <Route path="/registro-diario" element={<RegistroDiario />} />
+    </Routes>
   );
 }
 

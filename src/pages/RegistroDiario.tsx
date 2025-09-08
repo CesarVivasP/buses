@@ -14,9 +14,9 @@ function RegistroDiario() {
   const [usuarios, setUsuarios] = useState<
     { id_usuario: number; cedula: string; nombres: string; apellidos: string }[]
   >([]);
-  const [setTiposGasto] = useState<{ id_tipo_gasto: number; nombre: string }[]>(
-    []
-  );
+  const [tiposGasto, setTiposGasto] = useState<
+    { id_tipo_gasto: number; nombre: string }[]
+  >([]);
 
   const [selectedBus, setSelectedBus] = useState<{
     value: number;
@@ -51,7 +51,6 @@ function RegistroDiario() {
       .then((res) => res.json())
       .then((data) => {
         setTiposGasto(data);
-        // inicializar gastos con id y nombre
         setGastos(
           data.map((tg: any) => ({
             id_tipo_gasto: tg.id_tipo_gasto,
@@ -63,7 +62,6 @@ function RegistroDiario() {
       .catch(console.error);
   }, []);
 
-  // Opciones para react-select
   const busOptions = buses.map((b) => ({
     value: b.id_bus,
     label: `${b.placa} - Bus ${b.n_bus}`,
@@ -158,7 +156,7 @@ function RegistroDiario() {
               }
             }}
             onAdd={() => {
-              setVueltas([...vueltas, vueltas.length + 1]);
+              setVueltas([...vueltas, 0]);
               setEfectivo([...efectivo, ""]);
             }}
           />
@@ -169,7 +167,7 @@ function RegistroDiario() {
 
         {/* Botón de guardar */}
         <div style={{ marginTop: "20px", textAlign: "center" }}>
-          <button onClick={handleGuardar} className="btn-guardar">
+          <button type="button" onClick={handleGuardar} className="btn-guardar">
             Guardar Registro
           </button>
         </div>
