@@ -14,7 +14,7 @@ function RegistroDiario() {
   const [usuarios, setUsuarios] = useState<
     { id_usuario: number; cedula: string; nombres: string; apellidos: string }[]
   >([]);
-  const [tiposGasto, setTiposGasto] = useState<
+  const [_, setTiposGasto] = useState<
     { id_tipo_gasto: number; nombre: string }[]
   >([]);
 
@@ -85,7 +85,7 @@ function RegistroDiario() {
       id_bus: Number(selectedBus.value),
       id_usuario: Number(selectedChofer.value),
       observaciones,
-      vueltas: vueltas.map((v, i) => ({
+      vueltas: vueltas.map((_, i) => ({
         numero_vuelta: i + 1,
         valor: parseFloat(efectivo[i]) || 0,
       })),
@@ -167,7 +167,11 @@ function RegistroDiario() {
 
         {/* Botón de guardar */}
         <div style={{ marginTop: "20px", textAlign: "center" }}>
-          <button type="button" onClick={handleGuardar} className="btn-guardar">
+          <button
+            type="button"
+            onClick={handleGuardar}
+            className="add-vuelta-button"
+          >
             Guardar Registro
           </button>
         </div>

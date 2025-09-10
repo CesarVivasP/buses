@@ -8,6 +8,7 @@ import Gastos, { Gasto } from "./components/Gastos";
 import Observ from "./components/Observ";
 import IngresoDatos from "./pages/IngresoDatos";
 import RegistroDiario from "./pages/RegistroDiario";
+import Contacto from "./pages/Contacto";
 import "./App.css";
 
 function IngresoDatoss() {
@@ -119,6 +120,8 @@ function IngresoDatoss() {
         body: JSON.stringify(registro),
       });
       const data = await res.json();
+      console.log("📤 Respuesta del servidor:", data);
+
       alert("Registro diario guardado con éxito ✅");
 
       // Reset opcional
@@ -182,7 +185,7 @@ function IngresoDatoss() {
         <Observ value={observaciones} onChange={setObservaciones} />
 
         <div style={{ marginTop: "20px", textAlign: "center" }}>
-          <button className="btn-guardar" onClick={handleSubmit}>
+          <button className="add-vuelta-button" onClick={handleSubmit}>
             Guardar Registro Diario
           </button>
         </div>
@@ -197,6 +200,7 @@ function App() {
       <Route path="/registro-diario" element={<IngresoDatoss />} />
       <Route path="/" element={<IngresoDatos />} />
       <Route path="/registro-diario" element={<RegistroDiario />} />
+      <Route path="/contacto" element={<Contacto />} />
     </Routes>
   );
 }

@@ -113,18 +113,16 @@ const IngresoDatoss = () => {
     }
   };
 
-  // Estilos para React-Select responsivo
   const customStyles = {
     container: (provided: any) => ({
       ...provided,
-      width: "100%", // 100% del contenedor padre
+      width: "100%",
     }),
     menuPortal: (base: any) => ({ ...base, zIndex: 9999 }),
   };
 
   return (
     <div>
-      {/* Header siempre visible */}
       <Header />
 
       {/* Contenido del formulario */}
@@ -211,7 +209,11 @@ const IngresoDatoss = () => {
               menuPortalTarget={document.body} // Esto hace que el menú se muestre sobre todo
             />
 
-            <button type="button" onClick={handleGuardar}>
+            <button
+              type="button"
+              className="add-vuelta-button"
+              onClick={handleGuardar}
+            >
               Guardar
             </button>
           </div>
@@ -274,7 +276,11 @@ const IngresoDatoss = () => {
               <option value="E">Tipo E</option>
             </select>
 
-            <button type="button" onClick={handleGuardar}>
+            <button
+              type="button"
+              className="add-vuelta-button"
+              onClick={handleGuardar}
+            >
               Guardar
             </button>
           </div>
